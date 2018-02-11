@@ -1,0 +1,31 @@
+﻿
+@model object
+@using Newtonsoft.Json
+@using React.Web.Mvc;
+
+@if (Request.QueryString["react-clientside"] == "1")
+{
+    var Componentid = Guid.NewGuid();
+    <div id="@Componentid"></div>
+    <script>
+        var mountNode = document.getElementById("@Componentid");
+        ReactDOM.render(React.createElement(@ViewBag.Module, @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.None))), mountNode);
+    </script>
+}
+else
+{
+    @* Server-side rendering using ReactJS.NET *@
+    @Html.React((String)ViewBag.Module, Model)
+}
+
+@if (false)
+{
+    @* Debugging data (writes the model json to the source of the Page) *@
+    <!-- ##########################################################
+    Model: @((String)ViewBag.Module)
+    @if(true)
+    {
+        @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented))
+    }
+    -->
+}
