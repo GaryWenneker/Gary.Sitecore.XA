@@ -1,0 +1,44 @@
+﻿@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+
+@using Newtonsoft.Json
+@using React.Web.Mvc;
+@using Sitecore.Mvc.Extensions;
+@using Sitecore.Mvc.Presentation;
+
+
+@model object
+
+
+<div @Html.Sxa().Component("simple-component col-md-1")>
+
+    @{
+        var Componentid = Guid.NewGuid();
+
+    }
+
+    <div id="@Componentid"></div>
+
+    <div>
+
+        <script type="text/javascript">
+
+			var mountNode = document.getElementById("@Componentid");
+			if(mountNode){ReactDOM.render(React.createElement(@ViewBag.Module, {links: @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented))}), mountNode);}
+
+        </script>
+    </div>
+
+    <div class="server-rendering">
+        @Html.ReactInitJavaScript()
+
+        @Html.React("Cito.default.SimpleComponentController", new
+        {
+            text = "Hello from the SimpleComponentController",
+            title = "This is from the server"
+        })
+    </div>
+
+
+</div>

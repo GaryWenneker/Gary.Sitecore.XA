@@ -1,0 +1,18 @@
+﻿@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@model Gary.XA.Feature.Media.Models.RelatedContentRenderingModel
+
+<div @Html.Sxa().Component("search-results", Model.Attributes) style="display: @Model.StyleDisplay">
+
+
+    <h3>
+        @Html.Sxa().Field("Related Content Text", Model.DataSourceItem, !Model.IsControlEditable)
+    </h3>
+
+
+
+    @foreach (var result in Model.ResultSet.Results)
+    {
+        @Html.Raw(result.Html)
+    }
+</div>
